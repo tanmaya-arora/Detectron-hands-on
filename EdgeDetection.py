@@ -60,6 +60,16 @@ for i in range(len(contours)):
                 cv.rectangle(drawing, (int(boundRect[i][0]), int(boundRect[i][1])), \
                                 (int(boundRect[i][0]+boundRect[i][2]), int(boundRect[i][1]+boundRect[i][3])), color=(255,255,255), thickness=2)
                 drawn_rectangles.append(boundRect[i])
+        elif file == 'img2.jpeg':
+            if int(boundRect[i][1]) > 50:
+                cv.rectangle(drawing, (int(boundRect[i][0]), int(boundRect[i][1])), \
+                                (int(boundRect[i][0]+boundRect[i][2]), int(boundRect[i][1]+boundRect[i][3])), color=(255,255,255), thickness=2)
+                drawn_rectangles.append(boundRect[i])
+        elif file == 'img3.jpeg':
+            if int(boundRect[i][1]) > 80:
+                cv.rectangle(drawing, (int(boundRect[i][0]), int(boundRect[i][1])), \
+                                (int(boundRect[i][0]+boundRect[i][2]), int(boundRect[i][1]+boundRect[i][3])), color=(255,255,255), thickness=2)
+                drawn_rectangles.append(boundRect[i])
         else:
             cv.rectangle(drawing, (int(boundRect[i][0]), int(boundRect[i][1])), \
                             (int(boundRect[i][0]+boundRect[i][2]), int(boundRect[i][1]+boundRect[i][3])), color=(255,255,255), thickness=2)
