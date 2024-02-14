@@ -4,7 +4,8 @@ from matplotlib import pyplot as plt
 import random
 
 print("Reading image")
-img = cv.imread('img4.jpeg', cv.IMREAD_GRAYSCALE)
+file = 'img5.jpeg'
+img = cv.imread(filename=file, flags=cv.IMREAD_GRAYSCALE)
 print("Image width and height ",img.shape)
 
 width = img.shape[1]
@@ -22,7 +23,7 @@ if width%100 >=40:
     nw += 1
     width = 100 * (nw)
 
-print("Width and height after change is ",width, "   ", height)
+print("Width and height after change is ",width, "  ", height)
 
 print("Image read from hard disk")
 assert img is not None, "file could not be read, check with os.path.exists()"
@@ -54,9 +55,15 @@ for i in range(len(contours)):
     # print(f"Bounding rectangle parameters at index {i} :  {boundRect[i]}")
     if (int(boundRect[i][0]) < 500) and (int(boundRect[i][2]) >= 50 or int(boundRect[i][3]) >= 50):
     # if int(boundRect[i][2]) >= 50 or int(boundRect[i][3]) >= 50:
-        cv.rectangle(drawing, (int(boundRect[i][0]), int(boundRect[i][1])), \
-                        (int(boundRect[i][0]+boundRect[i][2]), int(boundRect[i][1]+boundRect[i][3])), color=(255,255,255), thickness=2)
-        drawn_rectangles.append(boundRect[i])
+        if file == 'img5.jpeg':
+            if int(boundRect[i][0]) > 100 and int(boundRect[i][1]) > 170:
+                cv.rectangle(drawing, (int(boundRect[i][0]), int(boundRect[i][1])), \
+                                (int(boundRect[i][0]+boundRect[i][2]), int(boundRect[i][1]+boundRect[i][3])), color=(255,255,255), thickness=2)
+                drawn_rectangles.append(boundRect[i])
+        else:
+            cv.rectangle(drawing, (int(boundRect[i][0]), int(boundRect[i][1])), \
+                            (int(boundRect[i][0]+boundRect[i][2]), int(boundRect[i][1]+boundRect[i][3])), color=(255,255,255), thickness=2)
+            drawn_rectangles.append(boundRect[i])
     #cv.circle(drawing, (int(centers[i][0]), int(centers[i][1])), int(radius[i]), color, 2)
     # cv.imshow('Contours', drawing)
     # cv.waitKey(0)
@@ -64,13 +71,18 @@ for i in range(len(contours)):
 # print("\nRectangles drawn are ",drawn_rectangles)
 
 rectangles_height = []
+rectangles_width = []
 
 for rectangle in drawn_rectangles:
     h = ((rectangle[3] - rectangle[1])**2)**0.5
+    w = ((rectangle[2] - rectangle[1])**2)**0.5
     rectangles_height.append(h)
+    rectangles_width.append(w)
 
 print("\nHeight of rectangles --- ",rectangles_height)
+print("Width of rectangles ",rectangles_width)
 print("\nHeight of object ",sum(rectangles_height))
+print("\nWidth of rectangles ",sum(rectangles_width))
 
 plt.subplot(121),plt.imshow(img,cmap = 'gray')
 plt.title('Original Image'), plt.xticks([i * 100 for i in range(nw)]), plt.yticks([j * 100 for j in range(nh)])
